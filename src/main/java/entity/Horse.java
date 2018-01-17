@@ -2,6 +2,7 @@ package entity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class Horse {
     int travelCount;//马跳跃的次数
@@ -10,8 +11,8 @@ public class Horse {
     Board board;
     Position[][] positions;//马所有可以走的位置
     Position currentPosition;//马当前的位置
-    ArrayList<Position> trace;//马的足迹
-    public int count;//从这个位置出发马周游的路线数
+    List<Position> trace;//马的足迹
+    int count;//从这个位置出发马周游的路线数
 
     /*
     * 马的构造方法
@@ -23,7 +24,6 @@ public class Horse {
         this.positions = board.positions;
         this.travelCount = 1;//当马出现时，记跳跃1次
         this.currentPosition = board.positions[0][0];//默认位置为棋盘上的（0，0）
-        currentPosition.setUseable(false);//设置马的初始位置为不可用
         this.trace = new ArrayList<Position>(board.size);
         trace.add(this.travelCount - 1, this.currentPosition);//把当前位置加入足迹
     }
@@ -31,7 +31,6 @@ public class Horse {
     public Horse(Position position, Board board) {
         this(board);
         this.currentPosition = position;
-        currentPosition.setUseable(false);//设置马的初始位置为不可用
         this.trace = new ArrayList<Position>(board.size);
         trace.add(this.travelCount - 1, this.currentPosition);//把当前位置加入足迹
     }
@@ -61,6 +60,10 @@ public class Horse {
             currentPosition = trace.get(trace.size() - 1);//回到上一步
         }
         return;
+    }
+
+    public int getCount() {
+        return this.count;
     }
 
 }
